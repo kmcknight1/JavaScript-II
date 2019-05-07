@@ -55,29 +55,50 @@ const runners = [{"id":1,"first_name":"Charmain","last_name":"Seiler","email":"c
 
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs.  Combine both the first and last names into a new array called fullName. 
-let fullName = [];
+let fullName = [] 
+runners.forEach(item => fullName.push(`${item.first_name} ${item.last_name}`));
 console.log(fullName);
 
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runner's first names converted to uppercase because the director BECAME DRUNK WITH POWER. Convert each first name into all caps and log the result
-let allCaps = [];
+
+let allCaps = runners.map(item => item.first_name.toUpperCase());
 console.log(allCaps); 
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue.  Get a list of runners with large sized shirts so they can choose a different size. Return an array named largeShirts that contains information about the runners that have a shirt size of L and log the result
-let largeShirts = [];
-console.log(largeShirts);
+let largeShirts = runners.filter(item => item.shirt_size=="L");
+console.table(largeShirts);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations into a ticketPriceTotal array and log the result
-let ticketPriceTotal = [];
+let ticketPriceTotal = runners.reduce((total, runner) => {
+    return total + (runner.donation);
+}, 0); 
+
 console.log(ticketPriceTotal);
 
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
-// Problem 1
+// Problem 1 - Use .map() ===
+//They're needing a list of all the First and Last names along with their email addresses in order to send a thank you email to all participating runners. 
+const namesAndEmails = (runners.map(item => `${item.first_name} ${item.last_name}'s email address is ${item.email}`));
 
-// Problem 2
+console.log(namesAndEmails);
 
-// Problem 3
+
+// Problem 2 - Use .filter() ===
+// A special award/thank you will be given to those who donated over $200. Use filter to create an array called over200 to list all the information of those people.
+const over200 = runners.filter(item => item.donation >= 200);
+
+console.table(over200);
+
+// Problem 3 - Use .reduce() ===
+//They want to find the runner with the highest donation in order to give them a special shoutout on their website. I used .reduce() to reurn the runner object with the highest donation.
+
+const highestDonation = runners.reduce(function (acc, runner) { 
+   return (acc.donation || 0) > runner.donation ? acc : runner; 
+}, {});
+
+console.log(highestDonation);
